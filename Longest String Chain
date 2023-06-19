@@ -52,3 +52,6 @@ bool check(string &s1, string s2)
         return false;
     }
 }
+
+another tutorial 
+https://youtu.be/PyvMWA3h5Nc
