@@ -1,0 +1,40 @@
+
+https://practice.geeksforgeeks.org/problems/brackets-in-matrix-chain-multiplication1024/1
+
+   pair<int, string> helper(int arr[], int i, int j, vector<vector<pair<int, string>>> &dp)
+{
+    if (i == j)
+    {
+        string st = "";
+        st += 'A' + i;
+        return {0, st};
+    }
+    if (dp[i][j].first != -1)
+    {
+        return dp[i][j];
+    }
+    int ans = INT_MAX;
+    string st = "";
+    for (int k = i; k <= j - 1; k++)
+    {
+        pair<int, string> p = helper(arr, i, k, dp);
+        pair<int, string> q = helper(arr, k + 1, j, dp);
+        int a = p.first + q.first + arr[i] * arr[k + 1] * arr[j + 1];
+        string str = "(" + p.second + q.second + ")";
+        if (a < ans)
+        {
+            ans = a;
+            st = str;
+        }
+    }
+    dp[i][j] = {ans, st};
+    return dp[i][j];
+}
+
+string matrixChainOrder(int arr[], int n)
+{
+    vector<vector<pair<int, string>>> dp(n, vector<pair<int, string>>(n, {-1, ""}));
+    pair<int, string> p;
+    p = helper(arr, 0, n - 2, dp);
+    return p.second;
+}
