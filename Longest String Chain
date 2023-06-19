@@ -1,3 +1,54 @@
 https://practice.geeksforgeeks.org/problems/longest-string-chain/1
 
-
+static bool comp(string &s1, string &s2)
+{
+    return s2.size() > s1.size();
+}
+int longestChain(int n, vector<string> &arr)
+{
+    // Code here
+    sort(arr.begin(), arr.end(), comp);
+    int ans = INT_MIN;
+    vector<int> dp(n, 1);
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            if (check(arr[i], arr[j]) && (dp[j] + 1) > dp[i])
+            {
+                dp[i] = dp[j] + 1;
+            }
+        }
+        ans = max(ans, dp[i]);
+    }
+    return ans;
+}
+bool check(string &s1, string s2)
+{
+    if (s1.size() != s2.size() + 1)
+    {
+        return false;
+    }
+    int first = 0;
+    int second = 0;
+    while (first < s1.size())
+    {
+        if (s1[first] == s2[second])
+        {
+            first++;
+            second++;
+        }
+        else
+        {
+            first++;
+        }
+    }
+    if (first == s1.size() && second == s2.size())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
