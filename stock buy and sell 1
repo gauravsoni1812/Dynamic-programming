@@ -1,0 +1,16 @@
+https://practice.geeksforgeeks.org/problems/stock-buy-and-sell-1587115621/1
+
+    vector<vector<int> > stockBuySell(vector<int> A, int n){
+        // code here 
+        vector<vector<int>>ans;
+        for(int i=0;i<n;i++){
+            int start=i;
+            while(i+1<A.size()&&A[i]<A[i+1]){
+                 i++;
+            }
+            if(start!=i&&A[i]>A[start]){
+                ans.push_back({start,i});
+            }
+        }
+        return ans;
+    }
