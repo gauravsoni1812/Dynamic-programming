@@ -1,0 +1,19 @@
+https://practice.geeksforgeeks.org/problems/stock-buy-and-sell2615/1
+
+void stockBuySell(int A[], int n) {
+    bool output=false;
+    for(int i = 0; i < n; i++){
+        int start = i;
+        while(i + 1 < n && A[i] < A[i + 1]){
+             i++;
+        }
+        if(start != i && A[i] > A[start]){
+            output=true;
+            cout << "(" << start << " " << i << ") ";
+        }
+    }
+    if(!output){
+        cout<<"No Profit"<<endl;
+    }
+    cout << endl;
+}
