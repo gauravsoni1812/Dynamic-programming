@@ -1,4 +1,5 @@
-https://practice.geeksforgeeks.org/problems/buy-stock-with-cooldown/1
+https://practice.geeksforgeeks.org/problems/buy-stock-2/1
+
 
  long long maximumProfit(vector<long long>&A, int n) {
         // Code here
