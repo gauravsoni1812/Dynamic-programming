@@ -1,0 +1,16 @@
+https://practice.geeksforgeeks.org/problems/buy-stock-with-cooldown/1
+
+ long long maximumProfit(vector<long long>&A, int n) {
+        // Code here
+    long long ans=0;
+        for(int i=0;i<n;i++){
+            long long start=i;
+            while(i+1<n&&A[i]<A[i+1]){
+                 i++;
+            }
+            if(start!=i&&A[i]>A[start]){
+                ans+= A[i]-A[start];
+                }
+        }
+        return ans;
+    }
