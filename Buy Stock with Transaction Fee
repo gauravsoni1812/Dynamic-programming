@@ -1,0 +1,29 @@
+https://practice.geeksforgeeks.org/problems/buy-stock-with-transaction-fee/1 
+
+      long long helper(int ind, vector<long long> &prices, int buy,vector<vector<int>> &dp, int fee)
+{
+    if (ind == prices.size())
+    {
+        return 0;
+    }
+    if(dp[ind][buy]!=-1){
+        return dp[ind][buy];
+    }
+  long long profit;
+    if (buy == 1)
+    {
+        profit = max((-prices[ind] + helper(ind + 1, prices, 0,dp,fee)), (helper(ind + 1, prices, 1,dp,fee)));
+    }
+    else
+    {
+        profit = max(prices[ind] + helper(ind + 1, prices, 1,dp,fee)-fee, helper(ind + 1, prices, 0,dp,fee));
+    }
+    return dp[ind][buy]=profit;
+}
+
+long long maximumProfit(vector<long long> &prices, int n, int fee)
+{
+    // Code here
+    vector<vector<int>>dp(n+1,vector<int>(2,-1));
+    return helper(0, prices, 1,dp,fee);
+}
