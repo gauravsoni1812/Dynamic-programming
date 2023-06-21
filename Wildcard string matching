@@ -1,0 +1,92 @@
+https://practice.geeksforgeeks.org/problems/wildcard-string-matching1126/1
+
+bool helper(int i, int j, string& wild, string& pattern)
+{
+    if (i == wild.size() && j == pattern.size())
+    {
+        return true;
+    }
+    if (i >= wild.size())
+    {
+        return false;
+    }
+    if (j == pattern.size())
+    {
+        for (int k = i; k < wild.size(); k++)
+        {
+            if (wild[k] != '*')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    if (wild[i] == pattern[j] || wild[i] == '?')
+    {
+        return helper(i + 1, j + 1, wild, pattern);
+    }
+    if (wild[i] == '*')
+    {
+        return helper(i + 1, j, wild, pattern) || helper(i + 1, j + 1, wild, pattern) || helper(i, j + 1, wild, pattern);
+    }
+
+    return false;
+}
+
+bool match(string wild, string pattern)
+{
+    return helper(0, 0, wild, pattern);
+}
+
+
+
+
+
+
+
+
+//memoization
+bool helper(string &str, string &pattern, int i, int j, vector<vector<int>> &dp)
+{
+    if (i == str.size() && j == pattern.size())
+    {
+        return true;
+    }
+    if (i >= str.size())
+    {
+        // Check if the remaining pattern consists of only '*'
+        for (int k = j; k < pattern.size(); k++)
+        {
+            if (pattern[k] != '*')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    if (j >= pattern.size())
+    {
+        return false;
+    }
+    if (dp[i][j] != -1)
+    {
+        return dp[i][j];
+    }
+    if (str[i] == pattern[j] || pattern[j] == '?')
+    {
+        return dp[i][j] = helper(str, pattern, i + 1, j + 1, dp);
+    }
+    if (pattern[j] == '*')
+    {
+        // Match '*' with an empty string or one or more characters
+        return dp[i][j] = helper(str, pattern, i, j + 1, dp) || helper(str, pattern, i + 1, j, dp);
+    }
+    return dp[i][j] = false; // Default return statement
+}
+
+int wildCard(string pattern, string str)
+{
+    vector < vector<int>> dp(str.size() + 1, vector<int>(pattern.size() + 1, -1));
+    return helper(str, pattern, 0, 0, dp);
+}
