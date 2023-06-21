@@ -1,0 +1,29 @@
+https://practice.geeksforgeeks.org/problems/path-in-matrix3805/1
+
+int maximumPath(int n, vector<vector<int>>& matrix)
+{
+    vector<vector<int>> dp(n, vector<int>(n, 0));
+
+    // Initialize the bottom row of dp with the values from the matrix
+    for (int i = 0; i < n; i++) {
+        dp[n - 1][i] = matrix[n - 1][i];
+    }
+
+    // Build the dp table iteratively from the bottom row to the top
+    for (int i = n - 2; i >= 0; i--) {
+        for (int j = 0; j < n; j++) {
+            int left = (j > 0) ? dp[i + 1][j - 1] : 0;
+            int down = dp[i + 1][j];
+            int right = (j < n - 1) ? dp[i + 1][j + 1] : 0;
+            dp[i][j] = matrix[i][j] + max({left, down, right});
+        }
+    }
+
+    // Find the maximum path sum in the top row
+    int maxSum = 0;
+    for (int i = 0; i < n; i++) {
+        maxSum = max(maxSum, dp[0][i]);
+    }
+
+    return maxSum;
+}
