@@ -1,0 +1,21 @@
+https://practice.geeksforgeeks.org/problems/triangle-path-sum/1
+
+int helper(int i, int j, vector < vector<int>> & triangle, int n,vector<vector<int>> &dp)
+{
+    if (i == n - 1)
+    {
+        return triangle[i][j];
+    }
+    if(dp[i][j]!=-1){
+         return dp[i][j];
+    }
+    int a = helper(i + 1, j, triangle, n,dp);
+    int b = helper(i + 1, j + 1, triangle, n,dp);
+    return dp[i][j]= triangle[i][j] + min(a, b);
+}
+int minimizeSum(int n, vector<vector<int>> &triangle)
+{
+    // Code here
+    vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+    return helper(0, 0, triangle, n,dp);
+}
