@@ -1,0 +1,62 @@
+https://practice.geeksforgeeks.org/problems/96161dfced02d544fc70c71d09b7a616fe726085/1
+
+int mod = 1000000007;
+
+int uniquePaths(int n, int m, std::vector<std::vector<int>>& grid)
+{
+    std::vector<std::vector<int>> dp(n, std::vector<int>(m, 0));
+
+    // Base case: Initialize the bottom-right cell as 1
+    dp[n - 1][m - 1] = 1;
+
+    // Calculate the number of ways for each cell starting from the bottom-right cell
+    for (int i = n - 1; i >= 0; i--)
+    {
+        for (int j = m - 1; j >= 0; j--)
+        {
+            if (grid[i][j] == 1)
+            {
+                // If the cell is reachable, add the number of ways from the right cell and bottom cell
+                if (j + 1 < m)
+                    dp[i][j] += dp[i][j + 1] % mod;
+                if (i + 1 < n)
+                    dp[i][j] += dp[i + 1][j] % mod;
+
+                dp[i][j] %= mod;
+            }
+        }
+    }
+
+    return dp[0][0];
+}
+
+
+
+class Solution {
+  public:
+
+    #include<bits/stdc++.h>
+    int mod=1000000007;
+int helper(int i, int j, vector<vector<int>>& grid, int n, int m, vector<vector<int>>& dp) {
+    if (i == n - 1 && j == m - 1) {
+        return 1;
+    }
+    if (i > n - 1 || j > m - 1) {
+        return 0;
+    }
+    if (grid[i][j] == 0) {
+        return 0;
+    }
+    if (dp[i][j] != -1) {
+        return dp[i][j];
+    }
+    return dp[i][j] = (helper(i + 1, j, grid, n, m, dp)%mod + helper(i, j + 1, grid, n, m, dp)%mod)%mod;
+}
+
+int uniquePaths(int n, int m, vector<vector<int>>& grid) {
+    if(grid[n-1][m-1]==0){
+         return 0;
+    }
+    vector<vector<int>> dp(n, vector<int>(m, -1));
+    return helper(0, 0, grid, n, m, dp);
+}
