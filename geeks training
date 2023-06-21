@@ -1,0 +1,55 @@
+https://practice.geeksforgeeks.org/problems/geeks-training/1
+
+  int helper(int i, int j, vector<vector<int>> &points, int n, vector<vector<int>> &dp)
+{
+    if (i == n - 1)
+    {
+        return points[i][j];
+    }
+    if (dp[i][j] != -1)
+    {
+        return dp[i][j];
+    }
+    int a = points[i][j];
+    if (j == 0)
+    {
+        return dp[i][j] = a + max(helper(i + 1, j + 1, points, n, dp), helper(i + 1, j + 2, points, n, dp));
+    }
+    else if (j == 1)
+    {
+        return dp[i][j] = a + max(helper(i + 1, j - 1, points, n, dp), helper(i + 1, j + 1, points, n, dp));
+    }
+    else if (j == 2)
+    {
+        return dp[i][j] = a + max(helper(i + 1, j - 2, points, n, dp), helper(i + 1, j - 1, points, n, dp));
+    }
+}
+int maximumPoints(vector<vector<int>> &points, int n)
+{
+    // Code here
+    vector<vector<int>> dp(n + 1, vector<int>(3, 0));
+    for(int i=0;i<3;i++){
+        dp[n-1][i]=points[n-1][i];
+    }
+    for (int i = n-2; i >=0; i--)
+    {
+        for (int j = 0; j <= 2; j++)
+        {
+            int a = points[i][j];
+            if (j == 0)
+            {
+                dp[i][j] = a + max(dp[i + 1][j + 1], dp[i + 1][j + 2]);
+            }
+            else if (j == 1)
+            {
+                dp[i][j] = a + max(dp[i + 1][j - 1], dp[i + 1][j + 1]);
+            }
+            else if (j == 2)
+            {
+                dp[i][j] = a + max(dp[i + 1][j - 2], dp[i + 1][j - 1]);
+            }
+        }
+    }
+   
+    return max({dp[0][0], dp[0][1], dp[0][2]});
+}
