@@ -1,0 +1,16 @@
+https://practice.geeksforgeeks.org/problems/max-sum-without-adjacents-2/1
+
+int findMaxSum(vector<int> &a)
+{
+    // Code Here
+    vector<int> dp(a.size(), 0);
+    dp[0] = a[0];
+    dp[1] = a[1] + a[0];
+    dp[2] = max({a[1] + a[0], a[1] + a[2], a[2] + a[0]});
+    for (int i = 3; i < a.size(); i++)
+    {
+        dp[i] = max({dp[i - 1], dp[i - 2] + a[i], dp[i - 3] + a[i] + a[i - 1]});
+    }
+    return dp[a.size() - 1];
+}
+  
