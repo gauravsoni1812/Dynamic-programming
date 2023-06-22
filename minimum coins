@@ -1,5 +1,7 @@
 https://practice.geeksforgeeks.org/problems/number-of-coins1824/1
 
+https://youtu.be/myPeWb3Y68A
+
 int helper(int coins[], int ind, int sum, vector<vector<int>>& dp)
 {
 	if (ind == 0)
