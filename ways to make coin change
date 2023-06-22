@@ -1,0 +1,27 @@
+https://practice.geeksforgeeks.org/problems/coin-change2448/1
+
+long long int count_helper(int coins[], int N, int sum, vector<vector<long long int>> &output)
+{
+    if (sum == 0)
+    {
+        return 1;
+    }
+    if (N == 0 || sum < 0)
+    {
+        return 0;
+    }
+    if (output[N][sum] != -1)
+    {
+        return output[N][sum];
+    }
+    long long int a = count_helper(coins, N, sum - coins[N - 1], output);
+    long long int b = count_helper(coins, N - 1, sum, output);
+    return output[N][sum] = a + b;
+}
+
+long long int count(int coins[], int N, int sum)
+{
+
+    vector<vector<long long int>> output(N + 1, vector<long long int>(sum + 1, -1));
+    return count_helper(coins, N, sum, output);
+}
