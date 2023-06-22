@@ -1,0 +1,32 @@
+https://practice.geeksforgeeks.org/problems/target-sum-1626326450/1
+
+int helper(int arr[], int n, int target){
+ 
+	if (n == 0)
+	{
+		if (target == 0)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+ 
+	int a = helper(arr + 1, n - 1, target - arr[0]);
+	int b = helper(arr + 1, n - 1, target + arr[0]);
+	return  a + b;
+}
+int findTargetSumWays(vector<int> &A, int target)
+{
+ 
+	int n = A.size();
+	int arr[n];
+	for (int i = 0; i < n; i++)
+	{
+		arr[i] = A[i];
+	}
+ 
+	return helper(arr, n, target);
+}
