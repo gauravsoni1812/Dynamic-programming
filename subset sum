@@ -1,0 +1,22 @@
+https://practice.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1
+
+  bool helper(int i,vector<int> &arr, int sum,vector<vector<int>>&dp){
+    if(i==arr.size()){
+        if(sum==0){
+            return true;
+        }
+        return false;
+    }   
+    if(dp[i][sum]!=-1){
+         return dp[i][sum];
+    }
+    bool a=helper(i+1,arr, sum-arr[i],dp);
+    bool b=helper(i+1,arr,sum,dp);
+    return dp[i][sum] =a||b;
+  }
+    bool isSubsetSum(vector<int>arr, int sum){
+        // code here 
+        int n=arr.size();
+        vector<vector<int>>dp(n+1,vector<int>(sum+1,-1));
+        return helper(0, arr ,sum,dp);
+    }
