@@ -1,0 +1,32 @@
+https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1
+
+int mem(int W, int wt[], int val[], int n, int output[][1001])
+{
+    if (n == 0 || W == 0)
+    {
+        return 0;
+    }
+    if(output[n][W]!=-1){
+        return output[n][W];
+    }
+    if (wt[0] > W)
+    {
+        return mem(W, wt + 1, val + 1, n - 1, output);
+      
+    }
+    int a = mem(W - wt[0], wt + 1, val + 1, n - 1, output) + val[0];
+    int b = mem(W, wt + 1, val + 1, n - 1, output);
+    return output[n][W]=max(a, b);
+}
+int knapSack(int W, int wt[], int val[], int n)
+{
+    int output[1001][1001];
+    for (int i = 0; i <= n; i++)
+    {
+        for (int j = 0; j <= W; j++)
+        {
+            output[i][j] = -1;
+        }
+    }
+    return mem(W, wt, val, n, output);
+}
