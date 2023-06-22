@@ -1,0 +1,25 @@
+https://practice.geeksforgeeks.org/problems/number-of-distinct-subsequences0909/1
+
+https://youtu.be/9UEHPiK53BA
+
+  int mod=1000000007;
+int distinctSubsequences(string s)
+{
+    int n =s.size();
+    vector<int> dp(s.size() + 1);
+    dp[0] = 1;
+    unordered_map<char, int> mp;
+    for (int i = 1; i <= s.size(); i++)
+    {
+        dp[i] = 2 * dp[i - 1]%mod;
+        char ch = s[i - 1];
+        if (mp.find(ch) != mp.end())
+        {
+            int j = mp[ch];
+            dp[i] = (dp[i] - dp[j - 1])%mod;
+        }
+        mp[ch] = i;
+    }
+    if(dp[n]<0)dp[n]+=mod;
+    return dp[s.size()]%mod;
+}
