@@ -1,0 +1,41 @@
+https://practice.geeksforgeeks.org/problems/number-of-coins1824/1
+
+int helper(int coins[], int ind, int sum, vector<vector<int>>& dp)
+{
+	if (ind == 0)
+	{
+		if (sum % coins[0] == 0)
+		{
+			return sum / coins[0];
+		}
+		else
+		{
+			return 1e9;
+		}
+	}
+	if (dp[ind][sum] != -1)
+	{
+		return dp[ind][sum];
+	}
+	int NotTake = 0 + helper(coins, ind - 1, sum,dp);
+	int take = INT_MAX;
+	if (coins[ind] <= sum)
+	{
+		take = 1 + helper(coins, ind, sum - coins[ind],dp);
+	}
+	return dp[ind][sum] = min(take, NotTake);
+}
+int minCoins(int coins[], int M, int V)
+{
+	// Your code goes he  vector<int> nums
+	vector<vector<int>> dp(M , vector<int>( V + 1, -1));
+	int a = helper(coins, M - 1, V, dp);
+	if (a == 1e9)
+	{
+		return -1;
+	}
+	else
+	{
+		return a;
+	}
+}
