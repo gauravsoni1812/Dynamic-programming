@@ -1,0 +1,30 @@
+https://practice.geeksforgeeks.org/problems/rod-cutting0840/1
+
+int helper(int len[], int price[], int n, int length, vector<vector<int>> &output)
+{
+	if (length == 0 || n == 0)
+	{
+		return 0;
+	}
+	if (output[length][n] != -1)
+	{
+		return output[length][n];
+	}
+	if (len[0] > length)
+	{
+		return output[length][n] = helper(len + 1, price + 1, n - 1, length,output);
+	}
+	int a = price[0] + helper(len, price, n, length - len[0],output);
+	int b = helper(len + 1, price + 1, n - 1, length,output);
+	return output[length][n] = max(a, b);
+}
+int cutRod(int price[], int n)
+{
+	int len[n];
+	for (int i = 0; i < n; i++)
+	{
+		len[i] = i + 1;
+	}
+	vector<vector<int>> output(n + 1, vector<int>(n + 1, -1));
+	return helper(len, price, n, n, output);
+}
