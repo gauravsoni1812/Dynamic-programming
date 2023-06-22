@@ -1,0 +1,36 @@
+https://practice.geeksforgeeks.org/problems/edit-distance3702/1
+int mem(string s, string t, int output[][101])
+{
+    // Code here
+    if (s.size() == 0 || t.size() == 0)
+    {
+        return max(s.size(), t.size());
+    }
+    if (output[s.size()][t.size()] != -1)
+    {
+        return output[s.size()][t.size()];
+    }
+    if (s[0] == t[0])
+    {
+        return  mem(s.substr(1), t.substr(1), output);
+    }
+    int a = 1 +  mem(s.substr(1), t, output);
+    int b = 1 +  mem(s, t.substr(1), output);
+    int c = 1 +  mem(s.substr(1), t.substr(1), output);
+
+    return output[s.size()][t.size()] = min(a, min(b, c));
+}
+
+int editDistance(string s, string t)
+{
+    int output[101][101];
+    for (int i = 0; i <= s.size(); i++)
+    {
+        for (int j = 0; j <= t.size(); j++)
+        {
+            output[i][j] = -1;
+        }
+    }
+
+    return  mem(s, t, output);
+}
