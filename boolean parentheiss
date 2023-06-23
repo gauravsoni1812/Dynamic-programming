@@ -1,0 +1,51 @@
+https://practice.geeksforgeeks.org/problems/boolean-parenthesization5610/1
+
+ int helper(string s ,int i, int j, bool ans){
+         if(i==j){
+            if(ans){
+              if(s[i]=='T'){
+                  return true;
+              }else{
+                   return false;
+              }
+            }else{
+              if(s[i]=='T'){
+                  return false;
+              }else{
+                   return true;
+              }
+            }
+         }
+        int  finalans=0;
+        for(int k=i+1;k<j;k+=2){
+            int lf=helper(s,i,k-1,false);
+            int lt=helper(s,i,k-1,true);
+            int rt=helper(s,k+1,j,true);
+            int rf=helper(s,k+1,j,false);
+            if(s[k]=='|'){
+                 if(ans){
+                    finalans+=lt*rt+lf*rt+lt*rf;
+                 }else{
+                    finalans+=lf*rf;  
+                 }
+            }else if(s[k]=='&'){
+                 if(ans){
+                      finalans+=lt*rt;
+                 }else{
+                      finalans+=lf*rt+lt*rf+lf*rf;
+                 }
+            }else if(s[k]=='^'){
+                if(ans){
+                     finalans+=lt*rf+rt*lf;
+                }else{
+                     finalans+= lt*rt+lf*rf; 
+                }
+            }
+        }
+        return finalans;
+    }
+    int countWays(int n, string s){
+        // code here
+    //   vector<vector<int>> dp(n + 1, vector<int>(n + 1, -1));
+      return helper(s, 0,n-1,true);
+    }
