@@ -1,0 +1,23 @@
+https://practice.geeksforgeeks.org/problems/minimum-characters-to-be-added-at-front-to-make-string-palindrome/1
+
+https://youtu.be/pE4D55Yti7o
+
+    public static int minChar(String str) {
+       //Write your code here
+       
+       int left = 0, right = str.length()-1, updatedRight = right;
+       int result = 0;
+       
+       while(left<right){
+           if(str.charAt(left)==str.charAt(right)){
+               left++;
+               right--;
+           }
+           else {
+               result++;
+               left = 0;
+               right = --updatedRight;
+           }
+       }
+       return result;
+    }
