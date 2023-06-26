@@ -1,0 +1,49 @@
+https://practice.geeksforgeeks.org/problems/word-break-part-23249/1
+
+see all all the palindromic sequences in recursion
+
+void helper(int index, unordered_map<string, bool> ourmap, string& s, vector<string>& ans, vector<vector<string>>& finalans)
+{
+    if (index == s.size())
+    {
+        finalans.push_back(ans);
+        return;
+    }
+    for (int i = index; i < s.size(); i++)
+    {
+        string left = s.substr(index, i - index + 1);
+        if (ourmap.find(left) != ourmap.end())
+        {
+            ans.push_back(left);
+            helper(i + 1, ourmap, s, ans, finalans);
+            ans.pop_back();
+        }
+    }
+}
+
+vector<string> wordBreak(int n, vector<string>& dict, string s)
+{
+    unordered_map<string, bool> ourmap;
+    for (int i = 0; i < n; i++)
+    {
+        ourmap[dict[i]] = true;
+    }
+    vector<vector<string>> finalans;
+    vector<string> ans;
+    helper(0, ourmap, s, ans, finalans);
+
+    vector<string> mainans;
+    for (int i = 0; i < finalans.size(); i++)
+    {
+        string a = "";
+        for (int j = 0; j < finalans[i].size(); j++)
+        {
+            a += finalans[i][j];
+            if (j != finalans[i].size() - 1)
+                a += " ";
+        }
+        mainans.push_back(a);
+    }
+
+    return mainans;
+}
