@@ -1,0 +1,40 @@
+https://practice.geeksforgeeks.org/problems/word-break1352/0
+
+
+
+bool helper(int index, unordered_map<string, bool> &ourmap, string A, vector<int> &dp)
+{
+    if (index == A.size())
+    {
+        return true;
+    }
+    if (dp[index] != -1)
+    {
+        return dp[index];
+    }
+    int n = A.size();
+    for (int j = index; j < n; j++)
+    {
+        string left = A.substr(index, j - index + 1);
+        if (ourmap.find(left) != ourmap.end())
+        {
+            if (helper(j + 1, ourmap, A, dp))
+            {
+                return dp[index] = true;
+            }
+        }
+    }
+    return dp[index] = false;
+}
+
+int wordBreak(string A, vector<string> &B)
+{
+    int n=A.size();
+    unordered_map<string, bool> ourmap;
+    vector<int> dp(n, -1);
+    for (int i = 0; i < B.size(); i++)
+    {
+        ourmap[B[i]] = true;
+    }
+    return helper(0, ourmap, A, dp) ? 1 : 0;
+}
